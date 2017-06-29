@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MenuApp">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ClassWork - Task 2</title>
+    <script src="../../Libraries/angular.js"></script>
+    <script src="../../Libraries/angular_route.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+         ### Задача 3
+         Создайте директиву для генерации меню.
+         В качестве источника данных директива должна использовать массив объектов,
+         одно из свойств объекта должено содержать текст элемента меню,
+         второе свойство должно использоватся для определения адреса перехода при клике по элементу меню.
+         * */
+
+        var menuApp = angular.module('MenuApp',['ngRoute'])
+            .config(function ($routeProvider) {
+
+                $routeProvider
+                    .when('/home', {
+                        templateUrl: 'home.html',
+                    })
+                    .when('/contact', {
+                        templateUrl: 'contact.html'
+                    })
+                    .when('/about', {
+                        templateUrl: 'about.html'
+                    })
+                    .otherwise({
+                        redirectTo: '/home'
+                    })
+            })
+            .directive('myDir', function() {
+                return {
+                    template: "<div><ul class='nav nav-pills' ng-repeat='item in items'><li><a href={{item.link}}>{{item.text}}</a></li></ul></div>",
+                    restrict: 'A',
+                    replace: true
+                }
+            })
+            .controller('MenuCtrl', function($scope) {
+                $scope.items = [
+                    {
+                        text: 'Home',
+                        link: '#/home'
+                    },
+                    {
+                        text: 'About',
+                        link: '#/about'
+                    },
+                    {
+                        text: 'Contact',
+                        link: '#/contact'
+                    }
+                ];
+            });
+
+    </script>
+</head>
+<body ng-controller="MenuCtrl">
+<div class="container">
+    <div my-dir></div>
+    <div class="panel" ng-view></div>
+</div>
+</body>
+</html>

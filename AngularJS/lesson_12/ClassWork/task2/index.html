@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="SelectApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ClassWork - Task 2</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+        /*
+         ### Задача 2
+         Используйте таблицу с данными массива items из предыдущей задачи. Реализуйте следующее:
+         * Добавьте на страницу 5 элементов checkbox с именами свойств элементов массива items(name, price и т.д.)
+         * Нажатие на каждый из checkbox скрывает/отображает соответствующее свойство элементов массива items в таблице
+         * Используйте директиву ng-switch
+         *
+         *
+         */
+        var selectApp = angular.module('SelectApp', []).
+        controller('SelectAppCtrl', function($scope) {
+            $scope.items = [
+                { name: "B Item", price: 10.9, category: "Category 1", count: 10, tax: 1.12, expiration: 10 },
+                { name: "A Item", price: 1.1, category: "Category 1", count: 8, tax: 0.55, expiration: 12 },
+                { name: "D Item", price: 2.6, category: "Category 2", count: 7, tax: 0.22, expiration: 5 },
+                { name: "C Item", price: 17.5, category: "Category 2", count: 33, tax: 2.77, expiration: 10 }];
+            $scope.access = {
+                name: true,
+                price: true,
+                category: true,
+                count: true,
+                tax: true,
+                expiration: true
+            };
+        });
+    </script>
+</head>
+<body ng-controller="SelectAppCtrl">
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th ng-switch on="access.name">
+                <div ng-switch-when="true">
+                    Name
+                </div>
+            </th>
+            <th ng-switch on="access.price">
+                <div ng-switch-when="true">
+                    Price
+                </div>
+            </th>
+            <th ng-switch on="access.category">
+                <div ng-switch-when="true">
+                    Category
+                </div>
+            </th>
+            <th ng-switch on="access.count">
+                <div ng-switch-when="true">
+                    Count
+                </div>
+            </th>
+            <th ng-switch on="access.tax">
+                <div ng-switch-when="true">
+                    Tax
+                </div>
+            </th>
+            <th ng-switch on="access.expiration">
+                <div ng-switch-when="true">
+                    Expiration
+                </div>
+            </th>
+        </tr>
+        </thead>
+        <tr ng-repeat="item in items">
+            <td ng-switch on="access.name">
+                <div ng-switch-when="true">
+                    {{item.name}}
+                </div>
+            </td>
+            <td ng-switch on="access.price">
+                <div ng-switch-when="true">
+                    {{item.price}}
+                </div>
+            </td>
+            <td ng-switch on="access.category">
+                <div ng-switch-when="true">
+                    {{item.category}}
+                </div>
+            </td>
+            <td ng-switch on="access.count">
+                <div ng-switch-when="true">
+                    {{item.count}}
+                </div>
+            </td>
+            <td ng-switch on="access.tax">
+                <div ng-switch-when="true">
+                    {{item.tax}}
+                </div>
+            </td>
+            <td ng-switch on="access.expiration">
+                <div ng-switch-when="true">
+                    {{item.expiration}}
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="access.name" /> Name
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="access.price" /> Price
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="access.category" /> Category
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="access.count" /> Count
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="access.tax" /> Tax
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="access.expiration" /> Expiration
+        </label>
+    </div>
+</div>
+</body>
+</html>

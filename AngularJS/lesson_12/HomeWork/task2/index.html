@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="SelectApp">
+<head>
+    <style>
+        .select {
+            margin: 15px 15px 0 15px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ClassWork - Task 2</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+        /*
+
+         ### Задача 2
+         Дано массив items:
+         ```
+         $scope.items = [
+         { name: "B Item", price: 10.9, category: "Category 1", count: 10, tax: 1.12, expiration: 10 },
+         { name: "A Item", price: 1.1, category: "Category 1", count: 8, tax: 0.55, expiration: 12 },
+         { name: "D Item", price: 2.6, category: "Category 2", count: 7, tax: 0.22, expiration: 5 },
+         { name: "C Item", price: 17.5, category: "Category 2", count: 33, tax: 2.77, expiration: 10 }];
+         ```
+         Создайте страницу с элементом select. Реализуйте следующее:
+         В зависимости от выбранного варианта в списке select, на экране отображаются данные массива или в виде таблицы, или в виде списка
+
+         */
+        var selectApp = angular.module('SelectApp', []).
+        controller('SelectAppCtrl', function($scope) {
+            $scope.items = [
+                { name: "B Item", price: 10.9, category: "Category 1", count: 10, tax: 1.12, expiration: 10 },
+                { name: "A Item", price: 1.1, category: "Category 1", count: 8, tax: 0.55, expiration: 12 },
+                { name: "D Item", price: 2.6, category: "Category 2", count: 7, tax: 0.22, expiration: 5 },
+                { name: "C Item", price: 17.5, category: "Category 2", count: 33, tax: 2.77, expiration: 10 }];
+
+            $scope.views = [
+                { view: "List", value: "parts/list.html" },
+                { view: "Table", value: "parts/table.html" }];
+
+            $scope.switchForView = $scope.views[0];
+        });
+
+
+
+    </script>
+</head>
+<body ng-controller="SelectAppCtrl">
+
+<select class="select" ng-model="switchForView" ng-options="item.view for item in views track by item.value"></select>
+
+<div ng-include="switchForView.value" style="margin-top:20px;">
+</div>
+</body>
+</html>

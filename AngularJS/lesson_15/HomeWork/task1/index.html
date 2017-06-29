@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="TimerApp">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>HomeWork - Task 1</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+
+
+         ### Задача 1
+
+         Создайте страницу с двумя кнопками Start и Stop. Реализуйте следующее:
+         * при нажатии на кнопку start, на страницу начинают выводиться чила в возрастающем порядке с интервалом 1 с.
+         * При нажатии на кнопку stop вывод чисел останавливается.
+         * При нажатии на кнопку start отсчет начинается всегда с 0.
+
+         * */
+
+        var timeApp = angular.module("TimerApp", [])
+            .controller("TimerCtrl", function ($scope, $interval) {
+                $scope.counter = 0;
+
+                $scope.startCount = function() {
+                    if(angular.isDefined($scope.intervalFunc)){
+                        return;
+                     }
+                     $scope.counter = 0;
+                     $scope.intervalFunc = $interval(function() {
+
+                         $scope.counter++
+                     },1000)
+
+                };
+                $scope.stopCount = function() {
+                    $interval.cancel($scope.intervalFunc)
+                };
+                $scope.stopTimer = function () {
+
+                    if (angular.isDefined($scope.intervalFunc)) {
+                        $interval.cancel($scope.intervalFunc);
+                        $scope.intervalFunc = undefined;
+                    }
+                };
+            });
+
+    </script>
+</head>
+<body ng-controller="TimerCtrl">
+<p>Counter : {{counter}}</p>
+<button ng-click="startCount()">Start</button>
+<button ng-click="stopTimer()">Stop</button>
+</body>
+</html>

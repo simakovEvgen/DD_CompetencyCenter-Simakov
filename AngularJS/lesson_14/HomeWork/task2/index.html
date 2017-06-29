@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="toDoApp">
+<head>
+    <style>
+        input.input-sm, input.checkbox, #completed, #description {
+            margin-bottom: 15px;
+        }
+
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>HomeWork - Task2</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+    <script>
+
+        /*
+        *
+        * ### Задача 2
+         Создайте приложение с интерфейсом показанном в файле template.png. Файл находится в папке Task.
+         Напишите сервис, который после каждого изменения формы, будет создавать JSON обьект с новыми данными и отправлять на сервер.
+         Выведите подготовленный к отправке объект на экран.
+         *
+         */
+
+        var model = [{
+            name: 'Today',
+            description: 'Do homework',
+            date: '06/06/17',
+            completed: false
+        }];
+
+
+
+        var toDoApp = angular.module('toDoApp',[])
+            .controller('toDoCtrl', ['$scope', 'senderService', function($scope, senderService) {
+                $scope.tasks = model;
+                $scope.name = '';
+                $scope.description = '';
+                $scope.date = '';
+                $scope.completed = '';
+                $scope.editStatus = false;
+                $scope.chechedTask = false;
+                $scope.sendLog = {
+                    counter: 1
+                };
+
+                $scope.addTask = function() {
+                    if($scope.date == '' || $scope.name == '' || $scope.description == '') {
+                        alert("Нельзя оставлять поля пустыми");
+                        return
+                    }
+                    if($scope.name) {
+                        $scope.tasks.push({
+                            name: $scope.name,
+                            description: $scope.description,
+                            date: $scope.date,
+                            completed: $scope.completed
+                        });
+
+                        $scope.name = '';
+                        $scope.description = '';
+                        $scope.date = '';
+                        $scope.completed = '';
+                        $scope.editStatus = false;
+                    };
+                };
+
+                $scope.showButton = function() {
+
+                };
+
+                $scope.changeTask = function(i) {
+                    if ($scope.editStatus == true){
+                        alert("Заметка сейчас редактируется вами");
+                        return
+                    }
+                    $scope.editStatus = true;
+
+                    $scope.indexOfEditTask = i;
+
+                    $scope.name = $scope.tasks[i].name;
+                    $scope.description = $scope.tasks[i].description;
+                    $scope.date = $scope.tasks[i].date;
+                    $scope.completed = $scope.tasks[i].completed;
+                };
+
+                $scope.saveTask = function() {
+
+                    if($scope.name) {
+                        $scope.tasks[$scope.indexOfEditTask].name = $scope.name;
+                        $scope.tasks[$scope.indexOfEditTask].description = $scope.description;
+                        $scope.tasks[$scope.indexOfEditTask].date = $scope.date;
+                        $scope.tasks[$scope.indexOfEditTask].completed = $scope.completed;
+
+                        $scope.name = '';
+                        $scope.description = '';
+                        $scope.date = '';
+                        $scope.completed = '';
+                        $scope.editStatus = false;
+                    };
+                };
+
+                $scope.deleteTask = function() {
+
+                    $scope.tasks.splice($scope.indexOfEditTask);
+
+                };
+                $scope.sendJSON = function() {
+                    return senderService($scope.name, $scope.description, $scope.date, $scope.completed, $scope.sendLog);
+                };
+            }])
+            .factory('senderService', function ($http) {
+                return function(name, description, date, completed, result) {
+                    var task = {
+                        name: name,
+                        description: description,
+                        date: date,
+                        completed: completed
+                    };
+                    var toSend = JSON.stringify(task);
+                    result.strJSON = toSend; // выполниться перед отправкой запроса и выведет на экран обьект
+                        // отправка запроса
+                    $http.post('data/data.json', toSend)
+                        .then(function() {
+                            return result.howMatch = "Запрос отправлен успешно " + result.counter++ + " раз"
+                        })
+                }
+            })
+
+    </script>
+
+</head>
+<body ng-controller="toDoCtrl">
+
+<div class="container">
+
+    <h3>ToDo List</h3>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Completed</th>
+            <th>Edit/Delete</th>
+        </tr>
+        </thead>
+        <tr ng-repeat="item in tasks">
+            <td>{{item.name}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.date}}</td>
+            <td><input type="checkbox" ng-model="item.completed"/></td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="changeTask($index)">Edit</button>
+            </td>
+
+        </tr>
+    </table>
+
+    <div>
+        <!-- Форма для добавления новых задач -->
+        <form action="#">
+            <div>
+                <label for="name">Name</label>
+                <input id="name" ng-model="name" ng-change="sendJSON()" class="form-control input-sm col-xs-12" type="text"/>
+            </div>
+            <div>
+                <label for="date">Due Date</label>
+                <input id="date" ng-model="date" ng-change="sendJSON()"  class="form-control input-sm col-xs-12" type="text"/>
+            </div>
+            <div>
+                <label for="description">Description</label>
+                <textarea id="description" ng-model="description" ng-change="sendJSON()" class="col-xs-12 form-control" rows="2"></textarea>
+            </div>
+            <div>
+                <label for="completed">Completed</label>
+                <input  id="completed" class="checkbox" ng-change="sendJSON()" ng-model="completed" type="checkbox"/>
+            </div>
+            <div>
+                <button ng-if="!editStatus" type="button" class="btn btn-default" ng-click="addTask()">Add</button>
+                <button ng-if="editStatus" type="button" class="btn btn-primary" ng-click="saveTask(indexOfEditTask)">Save changes</button>
+                <button ng-if="editStatus" type="button" class="btn btn-danger" ng-click="deleteTask(indexOfEditTask)">Delete task</button>
+            </div>
+        </form>
+    </div>
+    <p>{{sendLog.strJSON}}</p>
+    <p>{{sendLog.howMatch}}</p>
+</div>
+</body>
+</html>

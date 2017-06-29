@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="CompileApp">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ClassWork - Task 3</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+
+         ### Задача 3
+         Используя сервис $compile выведите имя в шаблоне жирным начертанием используя тег strong:
+         ```
+         "Hello my name is {{name}}"
+         var data = { name: "<strong>Ivan</strong>" }
+
+         * */
+
+        var compileApp = angular.module("CompileApp", [])
+            .controller("CompileCtrl", function ($scope) {
+                $scope.hello = "Hello my name is ";
+            })
+            .directive("evalExpression", function ($compile) {
+                return function (scope, element, attrs) {
+                    var content = "<strong>Ivan</strong>";
+                    var listElem = angular.element(content);
+                    var compileFn = $compile(listElem);
+                    compileFn(scope);
+                    element.append(listElem);
+                }
+            });
+
+    </script>
+</head>
+<body ng-controller="CompileCtrl">
+<p>{{hello}}<span eval-expression></span></p>
+</body>
+</html>

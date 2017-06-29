@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="interApp">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ClassWork - Task 2</title>
+    <script src="../../Libraries/angular.js"></script>
+    <script src="https://code.angularjs.org/1.6.4/angular-sanitize.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+
+         ### Задача 2
+         Используя сервис $interpolate выведите имя в шаблоне жирным начертанием используя тег strong:
+         ```
+         "Hello my name is {{name}}"
+         var data = { name: "<strong>Ivan</strong>" }
+
+         * */
+
+        var interApp  = angular.module("interApp", ["ngSanitize"]);
+        interApp.controller("interCtrl", function ($scope, $interpolate) {
+
+                var expr = "Hello my name is {{name}}";
+                var data = {
+                    name: "<strong>Ivan</strong>"
+                };
+
+                $scope.interExp = function () {
+                    var fn = $interpolate(expr);
+                    $scope.res = fn(data);
+                }
+
+            });
+
+
+    </script>
+</head>
+<body ng-controller="interCtrl">
+<button ng-click="interExp()">Interpolate</button>
+<p ng-bind-html="res"></p>
+</body>
+</html>

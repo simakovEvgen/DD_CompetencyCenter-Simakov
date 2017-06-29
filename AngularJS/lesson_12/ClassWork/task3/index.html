@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="SelectApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ClassWork - Task 2</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+        /*
+
+         ### Задача 2
+         Используйте таблицу с данными массива items из предыдущей задачи. Реализуйте следующее:
+
+         * Добавьте на страницу 5 элементов checkbox с именами свойств элементов массива items(name, price и т.д.)
+         * Нажатие на каждый из checkbox скрывает/отображает соответствующее свойство элементов массива items в таблице
+         * Используйте директиву ng-switch
+         *
+         *
+         */
+        var selectApp = angular.module('SelectApp', []).
+        controller('SelectAppCtrl', function($scope) {
+            $scope.access = {
+                name: 'includes/name.html',
+                price: '',
+                category: '',
+                count: '',
+                tax: '',
+                expiration: ''
+            };
+            $scope.items = [
+                { name: "B Item", price: 10.9, category: "Category 1", count: 10, tax: 1.12, expiration: 10 },
+                { name: "A Item", price: 1.1, category: "Category 1", count: 8, tax: 0.55, expiration: 12 },
+                { name: "D Item", price: 2.6, category: "Category 2", count: 7, tax: 0.22, expiration: 5 },
+                { name: "C Item", price: 17.5, category: "Category 2", count: 33, tax: 2.77, expiration: 10 }];
+            $scope.showName = function () {
+                if($scope.access.name == 'includes/name.html'){
+                    $scope.access.name = '';
+                    return
+                }
+                $scope.access.name = 'includes/name.html';
+            };
+            $scope.showPrice = function () {
+                if($scope.access.price == 'includes/price.html'){
+                    $scope.access.price = '';
+                    return
+                }
+                $scope.access.price = 'includes/price.html';
+            };
+            $scope.showCat = function () {
+                if($scope.access.category == 'includes/category.html'){
+                    $scope.access.category = '';
+                    return
+                }
+                $scope.access.category = 'includes/category.html';
+            };
+            $scope.showCount = function () {
+                if($scope.access.count == 'includes/count.html'){
+                    $scope.access.count = '';
+                    return
+                }
+                $scope.access.count = 'includes/count.html';
+            };
+            $scope.showTax = function () {
+                if($scope.access.tax == 'includes/tax.html'){
+                    $scope.access.tax = '';
+                    return
+                }
+                $scope.access.tax = 'includes/tax.html';
+            };
+            $scope.showExp = function () {
+                if($scope.access.expiration == 'includes/expiration.html'){
+                    $scope.access.expiration = '';
+                    return
+                }
+                $scope.access.expiration = 'includes/expiration.html';
+            };
+
+        });
+
+
+
+    </script>
+</head>
+<body ng-controller="SelectAppCtrl">
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" checked ng-click="showName()" /> Name
+                    </label>
+                </div>
+            </th>
+            <th>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-click="showPrice()" /> Price
+                    </label>
+                </div>
+            </th>
+            <th>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-click="showCat()" /> Category
+                    </label>
+                </div>
+            </th>
+            <th>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-click="showCount()" /> Count
+                    </label>
+                </div>
+            </th>
+            <th>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-click="showTax()" /> Tax
+                    </label>
+                </div>
+            </th>
+            <th>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-click="showExp()" /> Expiration
+                    </label>
+                </div>
+            </th>
+        </tr>
+        </thead>
+        <tr ng-repeat="item in items">
+            <td ng-include="access.name"></td>
+            <td ng-include="access.price"></td>
+            <td ng-include="access.category"></td>
+            <td ng-include="access.count"></td>
+            <td ng-include="access.tax"></td>
+            <td ng-include="access.expiration"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

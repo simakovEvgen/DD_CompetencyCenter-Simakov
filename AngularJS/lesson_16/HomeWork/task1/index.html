@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ViewApp">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>HomeWork - Task 1</title>
+    <script src="Libraries/angular.js"></script>
+    <script src="Libraries/angular_route.js"></script>
+    <link href="Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+         *
+         ### Задача 1
+         Создайте страницу с панелью навигации со следуюшими пунктами: home, contact.
+         Используйте маршрутизацию для переключения меду пунктами меню. Файлы для задачи находятся в папке Task.
+         *
+         * */
+
+
+
+        var viewApp = angular.module('ViewApp', ['ngRoute'])
+            .config(function ($routeProvider) {
+
+                $routeProvider
+                    .when('/home', {
+                        templateUrl: 'home.html',
+                    })
+                    .when('/contact', {
+                        templateUrl: 'contact.html'
+                    })
+                    .otherwise({
+                        redirectTo: '/'
+                    });
+            })
+
+    </script>
+</head>
+<body>
+<div class="panel">
+    <ul class="nav nav-tabs">
+        <li><a href="#/home">Home</a></li>
+        <li><a href="#/contact">Contact</a></li>
+    </ul>
+</div>
+<div class="panel" ng-view></div>
+</body>
+</html>

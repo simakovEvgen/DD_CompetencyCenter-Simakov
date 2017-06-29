@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="CalculateApp">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ClassWork - Task 1</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+
+         ### Задача 1
+         Используя сервис $parse, реализуйте калькулятор без использования деректив.
+
+         * */
+
+        var calculateApp = angular.module('CalculateApp',[]).
+        controller('calculateCtrl', function($scope, $parse) {
+            $scope.exp = "100+1";
+            $scope.res = "";
+            $scope.clickHandler = function() {
+                var func = $parse($scope.exp);
+                $scope.res = func($scope.exp);
+            };
+            $scope.checker = function(e) {
+
+                if(e.keyCode != 43){
+                    if (e.keyCode != 45) {
+                        if (e.keyCode != 47){
+                            if (e.keyCode != 42){
+                                if(e.keyCode > 57 || e.keyCode < 48){
+                                    alert("Вводите, пожалуйста, только числа и знаки указаные в инструкции")
+                                    e.preventDefault()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+    </script>
+</head>
+<body ng-controller="calculateCtrl">
+<div class="container">
+    <p>Введите ваше выражение, как указано в примере ниже используя знаки ( + )( - )( * )( / )</p>
+    <input ng-keypress="checker($event)" type="text" ng-model="exp" placeholder="">
+    <button class="btn btn-success" ng-click="clickHandler()">
+        Result!
+    </button>
+    <div>
+        {{res}}
+    </div>
+</div>
+</body>
+</html>

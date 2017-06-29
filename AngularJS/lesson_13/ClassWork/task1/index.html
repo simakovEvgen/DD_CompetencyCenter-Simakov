@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="AddClass">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ClassWork - Task 1</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+
+         ### Задача1
+         Создайте страницу с элементом div и кнопкой. Реализуйте следующее:
+         При нажатии на кнопку элементу div присваиваются два произвольных CSS-класса
+
+         * */
+
+        var addClass = angular.module('AddClass',[]).
+            controller('AddClassCtrl', function($scope) {
+            $scope.classes = ['class-one ', 'class-two ', 'class-three ', 'class-four ']
+            $scope.divClass = 'some-class';
+            $scope.count = 0;
+            $scope.addClass = function() {
+                $scope.divClass = $scope.classes[$scope.count + 1] + $scope.classes[$scope.count];
+                $scope.count++;
+                if ($scope.count == 3){
+                    $scope.count = 0;
+                }
+            }
+        })
+
+
+    </script>
+    <style>
+        .some-class {
+            border: 1px solid black;
+        }
+        .class-one {
+            background-color: #2a6496;
+        }
+        .class-two {
+            font-family: "Comic Sans MS";
+        }
+        .class-three {
+            font-size: 200%;
+        }
+        .class-four {
+            height: 300px;
+        }
+    </style>
+</head>
+<body ng-controller="AddClassCtrl">
+<div class="container">
+        <div class="none" ng-class="divClass">
+            DIV
+        </div>
+        <button ng-click="addClass()">
+            Присвоить два класса
+        </button>
+</div>
+</body>
+</html>

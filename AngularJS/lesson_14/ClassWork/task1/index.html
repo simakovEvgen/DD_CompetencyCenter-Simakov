@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ButtonCounter">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ClassWork - Task 1</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+
+         ### Задача 1
+         Создайте страницу с кнопкой. Разработайте сервис, который будет считать количество кликов по кнопке и выводить его в консоль.
+         Используйте фабричную функцию для создания сервиса.
+
+         * */
+
+        var buttonCounterApp = angular.module('ButtonCounter',[]).
+        controller('ButtonCounterCtrl', ['$scope', 'ButtonClickCounterService', function($scope, ButtonClickCounterService) {
+            $scope.str1 = "Button clicked ";
+            $scope.str2 = " times";
+            $scope.massage = "Button clicked " + 0 + " times";
+            $scope.clickHandler = function() {
+                $scope.massage = ButtonClickCounterService($scope.str1, $scope.str2);
+
+            };
+        }]).
+        factory('ButtonClickCounterService', function($log) {
+            var counter = 1;
+            return function(msg1, msg2) {
+                $log.log(counter);
+                var res = msg1 + counter++ + msg2;
+
+                return res;
+
+            }
+        });
+
+
+    </script>
+</head>
+<body ng-controller="ButtonCounterCtrl">
+<div class="container">
+    <div>
+        {{massage}}
+    </div>
+    <button class="btn btn-success" ng-click="clickHandler()">
+        Click Me!
+    </button>
+</div>
+</body>
+</html>

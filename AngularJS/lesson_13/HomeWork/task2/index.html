@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="OneOfClass">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>HomeWork - Task 1</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+
+         ### Задача 2
+         Создайте страницу с десятью тегами div с текстом, полем ввода и кнопкой.
+         Добавьте фильтр, который при вводе значения в поле и после нажатия на кнопку,
+         покажет пользователю только те блоки, текст в которых соответствуют введеному значению.
+         Остальные блоки должны быть скрыты.
+
+         * */
+
+        var oneOfClass = angular.module('OneOfClass',[]).
+        controller('OneOfClassCtrl', function($scope) {
+            $scope.divs = [
+                {
+                    text: 'Tu quoque, Brute, fili mi, nihil timor populi, nihil!',
+                    divClass: 'div-01',
+                    status: false
+                },
+                {
+                    text: 'Hi omnes lingua, institutis, legibus inter se differunt.',
+                    divClass: 'div-02',
+                    status: false
+                },
+                {
+                    text: 'Quae vero auctorem tractata ab fiducia dicuntur.',
+                    divClass: 'div-03',
+                    status: false
+                },
+                {
+                    text: 'Ut enim ad minim veniam, quis nostrud exercitation.',
+                    divClass: 'div-04',
+                    status: false
+                },
+                {
+                    text: 'Fictum, deserunt mollit anim laborum astutumque!',
+                    divClass: 'div-05',
+                    status: false
+                }
+            ];
+            $scope.searchingText = '';
+            $scope.massage = ''
+            $scope.filterDiv = function() {
+                if ($scope.searchingText == ''){
+                    $scope.massage = 'Nothing to search';
+                }
+                else {
+                    $scope.massage = '';
+                }
+                for (var i = 0; i <= $scope.divs.length; i++){
+                    var item = $scope.divs[i].text;
+                    var res = item.indexOf($scope.searchingText);
+
+                    if (res != -1){
+                        $scope.divs[i].status = true;
+                    } else {
+                        $scope.divs[i].status = false;
+                    }
+                }
+            }
+
+
+
+        })
+
+
+    </script>
+    <style>
+        .div-01 {
+            padding: 10px;
+            margin: 5px;
+            color: lightgreen;
+        }
+        .div-02 {
+            padding: 10px;
+            margin: 5px;
+            color: lightpink;
+        }
+        .div-03 {
+            padding: 10px;
+            margin: 5px;
+            color: lightskyblue;
+        }
+        .div-04 {
+            padding: 10px;
+            margin: 5px;
+            color: lightseagreen;
+        }
+        .div-05 {
+            padding: 10px;
+            margin: 5px;
+            color: lightslategrey;
+        }
+    </style>
+</head>
+<body ng-controller="OneOfClassCtrl">
+<div class="container">
+    <input type="text" ng-model="searchingText">
+    <button ng-click="filterDiv()">
+        Поиск
+    </button>
+    <p>For example try 'e'</p>
+    <p>{{massage}}</p>
+    <div ng-repeat="item in divs">
+        <div ng-class="item.divClass" ng-switch on="item.status">
+            <div ng-switch-when="true">
+                <p>{{item.text}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

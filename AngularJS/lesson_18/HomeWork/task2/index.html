@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="CustomDirectiveApp">
+<head>
+    <style>
+        .red{
+            color: red;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>HomeWork - Task 2</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+         ### Задача 2
+         Создайте две директивы. Первая создает список ul с произвольным количеством элементов. Вторая директива
+         добавляет четным элементам списка CSS класс ‘red’ со следующим значением:
+         ```
+         .red {
+         color: red
+         }
+         ```
+         Обе директивы используются в качестве атрибутов и применяются к одному и тому же элементу. При решении
+         задачи используйте приоритет директив.
+
+
+         * */
+
+
+        var customDirictiveApp = angular.module('CustomDirectiveApp',[])
+            .directive('ulList', function() {
+                return {
+                    restrict: 'A',
+                    priority: 1,
+                    link: function(scope, elem, attrs) {
+                        var ulLst = angular.element('<ul id="test">');
+
+                        for (var i = 0; i < 12; i++) {
+                            var liElem = angular.element ('<li>').text ("List Item " + (i+1));
+                            ulLst.append (liElem);
+                        }
+
+                        elem.append (ulLst);
+                    }
+                }
+            })
+            .directive('addClass', function() {
+                return {
+                    restrict: 'A',
+                    priority: 2,
+                    link: function(scope, elem, attrs) {
+                        var li = angular.element(document.querySelector("ul#test"))[0].children;
+                        for(var i = 0; i < li.length; i++){
+                            if (i % 2){
+                                angular.element(document.querySelector("ul#test"))[0].children[i].className = 'red'
+                            }
+
+                        }
+                    }
+                }
+            })
+
+    </script>
+</head>
+<body>
+<div class="container">
+    <div ul-list add-class></div>
+</div>
+</body>
+</html>

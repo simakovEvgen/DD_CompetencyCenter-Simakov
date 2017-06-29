@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ButtonCounter2">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ClassWork - Task 2</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+
+         ### Задача 2
+         Создайте сервис из предыдущей задачи, используя метод провайдера.
+
+         * */
+
+        var buttonCounter2App = angular.module('ButtonCounter2',[]).
+        provider('ButtonClickCounter2Service', function() {
+            return {
+                $get: function($log) {
+                    var counter = 1;
+                    return function(msg1, msg2) {
+                        $log.log(counter)
+                        var res = msg1 + counter++ + msg2;
+                        return res;
+                    }
+                }
+            }
+        }).
+        controller('ButtonCounter2Ctrl', ['$scope', 'ButtonClickCounter2Service', function($scope, ButtonClickCounter2Service) {
+            $scope.str1 = "Button clicked ";
+            $scope.str2 = " times";
+            $scope.massage = "Button clicked " + 0 + " times";
+            $scope.clickHandler = function() {
+                $scope.massage = ButtonClickCounter2Service($scope.str1, $scope.str2);
+            };
+        }]);
+
+
+    </script>
+</head>
+<body ng-controller="ButtonCounter2Ctrl">
+<div class="container">
+    <div>
+        {{massage}}
+    </div>
+    <button class="btn btn-success" ng-click="clickHandler()">
+        Click Me!
+    </button>
+</div>
+</body>
+</html>

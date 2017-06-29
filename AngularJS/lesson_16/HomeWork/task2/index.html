@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ViewApp">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>HomeWork - Task 2</title>
+    <base href="/task2/" />
+    <script src="Libraries/angular.js"></script>
+    <script src="Libraries/angular_route.js"></script>
+    <link href="Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+         *
+         ### Задача 2 Добавьте в шаблон страницы home список со свойством name из следующего массива:
+         ```
+         var people = [{name: 'Vasya', age: 20, email: 'vasya@mail.ru', employed: false},
+         {name: 'Masha', age: 25, email: 'm@m', employed: true},
+         {name: 'Petya', age: 27, email: 'petya@stuff', employed: true},
+         {name: 'John', age: 36, email: 'johnDoe@mail', employed: true},
+         {name: 'Jane', age: 28, email: 'janeDoe@mail', employed: false}]
+         ```
+         Добавьте на страницу поддержку htm5Mode.
+
+         *
+         * */
+
+
+
+        var viewApp = angular.module('ViewApp', ['ngRoute'])
+            .config(function ($routeProvider, $locationProvider) {
+
+                $routeProvider
+                    .when('/home', {
+                        templateUrl: 'home.html',
+                        controller: 'ViewAppCtrl'
+                    })
+                    .when('/contact', {
+                        templateUrl: 'contact.html'
+                    })
+                    .otherwise({
+                        redirectTo: '/home'
+                    });
+                $locationProvider.html5Mode(true);
+            })
+            .controller('ViewAppCtrl', function($scope) {
+                $scope.people = [{name: 'Vasya', age: 20, email: 'vasya@mail.ru', employed: false},
+                    {name: 'Masha', age: 25, email: 'm@m', employed: true},
+                    {name: 'Petya', age: 27, email: 'petya@stuff', employed: true},
+                    {name: 'John', age: 36, email: 'johnDoe@mail', employed: true},
+                    {name: 'Jane', age: 28, email: 'janeDoe@mail', employed: false}];
+
+            })
+
+    </script>
+</head>
+<body>
+<div class="panel">
+    <ul class="nav nav-tabs">
+        <li><a href="home">Home</a></li>
+        <li><a href="contact">Contact</a></li>
+    </ul>
+</div>
+<div class="panel" ng-view></div>
+</body>
+</html>

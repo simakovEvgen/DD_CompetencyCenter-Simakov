@@ -1,0 +1,56 @@
+<form name="autoriz" novalidate ng-submit="addNewUser(newUser)">
+    <div class="form-group">
+        <label for="text2">User Name</label>
+        <input ng-keypress="checker($event)"
+                name="userName"
+                type="text"
+                class="form-control"
+                ng-model="newUser.name"
+                ng-pattern="userNamePattern"
+                id="text2" required
+                placeholder="Name" />
+    </div>
+    <div class="form-group">
+        <label for="text1">Login</label>
+        <input
+                name="userName"
+                type="text"
+                class="form-control"
+                ng-model="newUser.login"
+                ng-pattern="loginPattern"
+                id="text1" required
+                placeholder="Login" />
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input
+                name="userEmail"
+                type="text"
+                id="email"
+                class="form-control"
+                ng-model="newUser.email"
+                required
+                title="Например: usr4.re@fg.tt или usr7@fg.tas"
+                ng-pattern="emailPattern"
+                placeholder="user@mail.com" />
+    </div>
+    <div class="error" ng-show="autorize.userEmail.$error.pattern">
+    </div>
+    <div class="form-group">
+        <label for="Password">Пароль</label>
+        <input
+                name="userPassword"
+                type="password"
+                class="form-control"
+                ng-model="newUser.password"
+                id="Password"
+                required
+                placeholder="Password" />
+    </div>
+    <button
+            type="submit"
+            ng-disabled="autoriz.$invalid"
+            class="btn btn-primary btn-block">
+        OK
+    </button>
+</form>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Services">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>HomeWork - Task 1</title>
+    <script src="../../Libraries/angular.js"></script>
+    <script src="js/myServices.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+
+         ### Задача 1
+         Создайте сервис, который предоставляет стандартные математические операции – сложение, умножение и т.д.
+         Используйте три разных способа для создания сервиса.
+
+
+         * */
+
+        var servicesApp = angular.module('Services',['myServices']).
+        controller('servicesCtrl', function($scope, calcService, calculateService, calculateProviderService) {
+
+            // Factory
+            $scope.factoryFirst1 = '';
+            $scope.factoryFirst2 = '';
+            $scope.factoryResult = 'Result: ';
+            $scope.factoryPlusHandler = function() {
+                $scope.factoryResult = 'Result: ';
+                $scope.factoryResult = $scope.factoryResult + calcService.plusFunc($scope.factoryFirst1, $scope.factoryFirst2);
+            };
+            $scope.factoryMinusHandler = function() {
+                $scope.factoryResult = 'Result: ';
+                $scope.factoryResult = $scope.factoryResult + calcService.minusFunc($scope.factoryFirst1, $scope.factoryFirst2);
+            };
+            $scope.factoryMultHandler = function() {
+                $scope.factoryResult = 'Result: ';
+                $scope.factoryResult = $scope.factoryResult + calcService.multiplicationFunc($scope.factoryFirst1, $scope.factoryFirst2);
+            };
+            $scope.factoryDevideHandler = function() {
+                $scope.factoryResult = 'Result: ';
+                $scope.factoryResult = $scope.factoryResult + calcService.divideFunc($scope.factoryFirst1, $scope.factoryFirst2);
+            };
+
+            // Servise
+            $scope.serviceFirst1 = '';
+            $scope.serviceFirst2 = '';
+            $scope.serviceResult = 'Result: ';
+            $scope.servicePlusHandler = function() {
+                $scope.serviceResult = 'Result: ';
+                $scope.serviceResult = $scope.serviceResult + calculateService.plusFunc($scope.serviceFirst1, $scope.serviceFirst2);
+            };
+            $scope.serviceMinusHandler = function() {
+                $scope.serviceResult = 'Result: ';
+                $scope.serviceResult = $scope.serviceResult + calculateService.minusFunc($scope.serviceFirst1, $scope.serviceFirst2);
+            };
+            $scope.serviceMultHandler = function() {
+                $scope.serviceResult = 'Result: ';
+                $scope.serviceResult = $scope.serviceResult + calculateService.multiplicationFunc($scope.serviceFirst1, $scope.serviceFirst2);
+            };
+            $scope.serviceDevideHandler = function() {
+                $scope.serviceResult = 'Result: ';
+                $scope.serviceResult = $scope.serviceResult + calculateService.divideFunc($scope.serviceFirst1, $scope.serviceFirst2);
+            };
+            
+            // Provider
+
+            $scope.providerFirst1 = '';
+            $scope.providerFirst2 = '';
+            $scope.providerResult = 'Result: ';
+            $scope.providerPlusHandler = function() {
+                $scope.providerResult = 'Result: ';
+                $scope.providerResult = $scope.providerResult + calculateProviderService.plusFunc($scope.providerFirst1, $scope.providerFirst2);
+            };
+            $scope.providerMinusHandler = function() {
+                $scope.providerResult = 'Result: ';
+                $scope.providerResult = $scope.providerResult + calculateProviderService.minusFunc($scope.providerFirst1, $scope.providerFirst2);
+            };
+            $scope.providerMultHandler = function() {
+                $scope.providerResult = 'Result: ';
+                $scope.providerResult = $scope.providerResult + calculateProviderService.multiplicationFunc($scope.providerFirst1, $scope.providerFirst2);
+            };
+            $scope.providerDevideHandler = function() {
+                $scope.providerResult = 'Result: ';
+                $scope.providerResult = $scope.providerResult + calculateProviderService.divideFunc($scope.providerFirst1, $scope.providerFirst2);
+            };
+            $scope.checker = function(e) {
+                if(e.keyCode != 46){
+                    if(e.keyCode > 57 || e.keyCode < 48){
+                        alert("Вводите, пожалуйста, только числа и точки")
+                        e.preventDefault()
+                    }
+                }
+            }
+        });
+
+
+    </script>
+</head>
+<body ng-controller="servicesCtrl">
+<div class="container">
+    <div>
+        <p>factory service</p>
+        <input ng-keypress="checker($event)" type="text" ng-model="factoryFirst1">
+        <input ng-keypress="checker($event)" type="text" ng-model="factoryFirst2">
+        <div>{{factoryResult}}</div>
+        <button ng-click="factoryPlusHandler()">+</button>
+        <button ng-click="factoryMinusHandler()">-</button>
+        <button ng-click="factoryMultHandler()">*</button>
+        <button ng-click="factoryDevideHandler()">/</button>
+    </div>
+    <hr/>
+    <div>
+        <p>Service service</p>
+        <input ng-keypress="checker($event)" type="text" ng-model="serviceFirst1">
+        <input ng-keypress="checker($event)" type="text" ng-model="serviceFirst2">
+        <div>{{serviceResult}}</div>
+        <button ng-click="servicePlusHandler()">+</button>
+        <button ng-click="serviceMinusHandler()">-</button>
+        <button ng-click="serviceMultHandler()">*</button>
+        <button ng-click="serviceDevideHandler()">/</button>
+    </div>
+    <hr/>
+    <div>
+        <p>Provider service</p>
+        <input ng-keypress="checker($event)" type="text" ng-model="providerFirst1">
+        <input ng-keypress="checker($event)" type="text" ng-model="providerFirst2">
+        <div>{{providerResult}}</div>
+        <button ng-click="providerPlusHandler()">+</button>
+        <button ng-click="providerMinusHandler()">-</button>
+        <button ng-click="providerMultHandler()">*</button>
+        <button ng-click="providerDevideHandler()">/</button>
+    </div>
+</div>
+</body>
+</html>

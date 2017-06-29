@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="CustomDirectiveApp">
+<head>
+    <style>
+        label {
+            text-transform: capitalize;
+        }
+        form .ng-invalid-required.ng-dirty {
+            background-color: lightpink;
+        }
+
+        form .ng-invalid-email.ng-dirty {
+            background-color: lightgoldenrodyellow;
+        }
+
+        form .ng-invalid-pattern.ng-dirty{
+            background-color: lightpink;
+        }
+
+        form .ng-valid.ng-dirty {
+            background-color: lightgreen;
+        }
+
+        form .ng-invalid.ng-dirty{
+            background-color: lightpink;
+        }
+
+        form .ng-pristine {
+            border: 1px dotted gray;
+        }
+
+        form input.confirm {
+            background-color: lightgreen;
+        }
+
+        form input[name=userPasswordSuccess].noconfirm {
+            background-color: lightpink;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ClassWork - Task 2</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+
+         ### Задача 3
+         Для формы из предыдущей задачи добавьте валидацию на AngularJS. Используйте регулярные выражения.
+
+
+         * */
+
+        var customDirictiveApp = angular.module('CustomDirectiveApp',[])
+            .controller('CustomDirectiveCtrl', function($scope) {
+                $scope.userNamePattern = /[a-zA-Z]{4,}/;
+                $scope.loginPattern = new RegExp('[A-Za-z0-9]{4,}');
+                $scope.emailPattern = new RegExp('[a-z0-9\.]{3,}[a-z0-9]{1,}\@[a-z]{2,}\.[a-z\.]{2,4}');
+                $scope.headClass = " form-control";
+
+                $scope.checker = function(e) {
+                    if(e.keyCode > 122 || e.keyCode < 65){
+                        e.preventDefault()
+                    }
+                    if(e.keyCode == 92 || e.keyCode == 94 || e.keyCode == 95){
+                        e.preventDefault()
+                    }
+                }
+            })
+            .directive('myForm', function() {
+                return {
+                    restrict: 'A',
+                    scope: false,
+                    templateUrl: 'form.html'
+                }
+            })
+
+    </script>
+</head>
+<body ng-controller="CustomDirectiveCtrl">
+<div class="container">
+    <div my-form="items"></div>
+</div>
+</body>
+</html>

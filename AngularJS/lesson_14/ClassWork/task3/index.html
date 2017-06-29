@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="GetJSON">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ClassWork - Task 3</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+
+         ### Задача 3
+         Используйте сервис $http для получения данных из файла data.json, который находится в папке data.
+         Отобразите полученные данные на странице в виде таблицы. Предусмотрите обработку ошибок в запросе (используя Promise).
+
+
+         * */
+
+        var getJSON = angular.module('GetJSON',[]).
+        controller('GetJSONCtrl', function($scope, $http) {
+            $scope.getItems = function() {
+                var promise = $http.get('../../Libraries/data.json');
+                promise.then(successfully, errorStatus);
+            };
+            function successfully(response) {
+                $scope.items = response.data;
+            };
+            function errorStatus(error) {
+                $scope.errorSwitch = true;
+                $scope.errorMassage = error.statusText;
+            };
+            $scope.getItems();
+        });
+
+
+    </script>
+</head>
+<body ng-controller="GetJSONCtrl">
+<div class="container">
+    <div ng-if="errorSwitch"> <!-- Отобразить если неудачно -->
+        {{errorMassage}}
+    </div>
+    <table ng-if="!errorSwitch" class="table"> <!-- Скрыть если неудачно -->
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tr ng-repeat="item in items">
+            <td>{{item.name}}</td>
+            <td>{{item.price}}</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

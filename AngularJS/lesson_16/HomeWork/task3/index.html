@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ViewApp">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>HomeWork - Task 2</title>
+    <base href="/task3/" />
+    <script src="Libraries/angular.js"></script>
+    <script src="Libraries/angular_route.js"></script>
+    <link href="Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+         *
+         ### Задача 3
+         Добавьте на страницу следующий функционал:
+         * При клике по элементу списка на странице home, пользователь перенаправляется на страницу
+         contact по адресу ‘/contact + routeParams’, где routeParams – параметры маршрутизации, созданные
+         с помощью сервиса $routeParams, представляющие собой значения свойств массива people для элемента,
+         по которому кликнул пользователь.
+
+         * Используйте данные, переданные через $routeParams, для автозаполнения формы на странице contact
+         *
+         *
+          */
+
+
+
+        var viewApp = angular.module('ViewApp', ['ngRoute'])
+            .config(function ($routeProvider, $locationProvider) {
+
+                $routeProvider
+                    .when('/home', {
+                        templateUrl: 'home.html',
+                        controller: 'homeCtrl'
+                    })
+                    .when('/contact/:name/:age/:email/:employed', {
+                        templateUrl: 'contact.html',
+                        controller: 'contactCtrl'
+                    })
+                    .otherwise({
+                        redirectTo: '/home'
+                    });
+                $locationProvider.html5Mode(true);
+            })
+            .controller('homeCtrl', function($scope, $location) {
+                $scope.people = [{name: 'Vasya', age: 20, email: 'vasya@mail.ru', employed: false},
+                    {name: 'Masha', age: 25, email: 'm@m', employed: true},
+                    {name: 'Petya', age: 27, email: 'petya@stuff', employed: true},
+                    {name: 'John', age: 36, email: 'johnDoe@mail', employed: true},
+                    {name: 'Jane', age: 28, email: 'janeDoe@mail', employed: false}];
+
+                $scope.goTo = function(i) {
+                    var routeParams = $scope.people[i].name + '/' + $scope.people[i].age + '/' + $scope.people[i].email + '/' + $scope.people[i].employed;
+                    $location.path('/contact/' + routeParams);
+                }
+            })
+            .controller('contactCtrl', function($scope, $routeParams) {
+                    if ($routeParams.employed == "true"){
+                        $scope.bool = true
+                    } else {
+                        $scope.bool = false
+                    }
+                    $scope.params = {
+                        name: $routeParams.name,
+                        age: $routeParams.age,
+                        email: $routeParams.email,
+                        employed: $scope.bool
+                    }
+            })
+
+    </script>
+</head>
+<body>
+<div class="panel">
+    <ul class="nav nav-tabs">
+        <li><a href="home">Home</a></li>
+        <li><a href="contact">Contact</a></li>
+    </ul>
+</div>
+<div class="panel" ng-view></div>
+</body>
+</html>

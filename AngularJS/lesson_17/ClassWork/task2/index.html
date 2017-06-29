@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="CustomDirectiveApp">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>ClassWork - Task 2</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+
+         ### Задача 2
+         Создайте директиву, которая создает форму и добавляет ее на страницу. В форме должны быть следующие поля:
+         Username, login, password, email.
+
+         * */
+
+        var customDirictiveApp = angular.module('CustomDirectiveApp',[])
+            .controller('CustomDirectiveCtrl', function($scope) {
+                $scope.items = [
+                    {name: "type", id: "nameIn", value: "text", scope: 'name'},
+                    {name: "type", id: "logIn", value: "text", scope: 'login'},
+                    {name: "type", id: "passIn", value: "password", scope: 'password'},
+                    {name: "type", id: "emailIn", value: "email", scope: 'email'}
+                    ];
+                $scope.name = "Me";
+            })
+            .directive('myForm', function() {
+                return function(scope, el, attr) {
+                    var arrtVal = attr["myForm"];
+                    var data = scope[arrtVal];
+                    if (angular.isArray(data)){
+                        var e = angular.element('<form>');
+                        el.append(e).attr("class", "myForm");
+                        for (var i = 0; i < data.length; i++){
+                            var divEl = angular.element("<div>")
+                                .attr("class", "form-group");
+                            divEl.append(angular.element('<label>')
+                                .attr("for", data[i].id).text(data[i].scope));
+                            divEl.append(angular.element('<input>')
+                                .attr(data[i].name, data[i].value)
+                                .attr("class", data[i].scope + " form-control")
+                                .attr("id", data[i].id));
+                            e.append(divEl);
+                        }
+                    }
+                }
+            })
+
+    </script>
+</head>
+<style>
+    label {
+        text-transform: capitalize;
+    }
+</style>
+<body ng-controller="CustomDirectiveCtrl">
+<div class="container">
+    <div my-form="items"></div>
+</div>
+</body>
+</html>

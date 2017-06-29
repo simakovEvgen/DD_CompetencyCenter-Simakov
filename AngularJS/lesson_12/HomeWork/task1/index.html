@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html ng-app="calculator">
+<head>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" charset="UTF-8"/>
+
+    <title>HomeWork 1</title>
+
+    <link rel="stylesheet" href="../../Libraries/bootstrap.css">
+    <link rel="stylesheet" href="../../Libraries/bootstrap-theme.css">
+    <script src="../../Libraries/angular.js"></script>
+    <script>
+
+
+        /*
+
+         ### Задача 1
+         Создайте приложение-калькулятор. В приложении должно быть два поля ввода и кнопки «+», «-», «*», «/».
+         Реализуйте двунаправленную привязку таким образом, чтобы при нажатии на
+         кнопки результат арифметических операций выводился на странице.
+
+        */
+
+        var app = angular.module("calculator",[]);
+
+        app.controller("calcCtrl", function($scope){
+            $scope.result = { res: "" };
+            $scope.plusFunc = function(a,b){
+                if (a == "" || b == ""){
+                    $scope.result.res = "Поля должны быть заполнены";
+                    return
+                }
+                $scope.result.res = (+a + (+b)) ? +a + (+b) : "Введите правильное число";
+            };
+
+            $scope.minusFunc = function(a,b){
+                if (a == "" || b == ""){
+                    $scope.result.res = "Поля должны быть заполнены";
+                    return
+                }
+                if ((a == b)){
+                    $scope.result.res = "0"
+                    return
+                }
+                $scope.result.res = (a - b) ? a - b : "Введите правильное число";
+            };
+
+            $scope.mnogFunc = function(a,b){
+                if (a == "" || b == ""){
+                    $scope.result.res = "Поля должны быть заполнены";
+                    return
+                }
+                $scope.result.res = (a * b) ? a * b : "Введите правильное число";
+            };
+
+            $scope.delenFunc = function(a,b){
+                if (a == "" || b == ""){
+                    $scope.result.res = "Поля должны быть заполнены"
+                    return
+                }
+                if (b == '0'){
+                    alert("На ноль делить нельзя!")
+                    return
+                }
+                $scope.result.res = (a / b) ? a / b : "Введите правильное число";
+            };
+            $scope.checker = function(e) {
+                if(e.keyCode != 46){
+                    if(e.keyCode > 57 || e.keyCode < 48){
+                        alert("Вводите, пожалуйста, только числа и точки")
+                        e.preventDefault()
+                    }
+                }
+            }
+        });
+    </script>
+
+
+
+</head>
+<body>
+<div ng-controller="calcCtrl">
+    <input ng-keypress="checker($event)" ng-model="num1" type="text">
+    <input ng-keypress="checker($event)" ng-model="num2" type="text">
+    <button ng-click="plusFunc(num1,num2)">+</button>
+    <button ng-click="minusFunc(num1,num2)">-</button>
+    <button ng-click="mnogFunc(num1,num2)">*</button>
+    <button ng-click="delenFunc(num1,num2)">/</button>
+    {{result.res}}
+</div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="AnchorScrollAnimateApp">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>HomeWork - Task 3</title>
+    <script data-require="jquery@2.0.1" data-semver="2.0.1" src="http://code.jquery.com/jquery-2.0.1.min.js"></script>
+    <script src="../../Libraries/angular.js"></script>
+
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+
+
+         ### Задача 3
+         Используя любой сторонний сервис, измените усовершенствуйте решение задачи 2,
+         так что бы прокрутка выполнялась плавно.
+
+         */
+
+        var AnchorScrollApp = angular.module("AnchorScrollAnimateApp", [])
+            .controller("AnchorScrollAnimateCtrl", function ($scope, $anchorScroll, $location) {
+
+                $location.path('');
+                $scope.goTo = function(id) {
+                    $location.hash(id);
+                    var el = $('#'+id);
+                    $('body').animate({scrollTop: el.offset().top}, "slow");
+                }
+            });
+
+    </script>
+</head>
+<body ng-controller="AnchorScrollAnimateCtrl">
+<ul style="position: fixed; list-style: none;">
+    <li style="font-size: 150%">MENU</li>
+    <li style="cursor: pointer; margin-top: 10px" ng-click="goTo('header1')">Praeterea iter</li>
+    <li style="cursor: pointer; margin-top: 10px" ng-click="goTo('header2')">Idque Caesaris</li>
+    <li style="cursor: pointer; margin-top: 10px" ng-click="goTo('header3')">Qui ipsorum</li>
+    <li style="cursor: pointer; margin-top: 10px" ng-click="goTo('header4')">Cum sociis</li>
+    <li style="cursor: pointer; margin-top: 10px" ng-click="goTo('header5')">Gallia est</li>
+    <li style="cursor: pointer; margin-top: 10px" ng-click="goTo('header6')">At nos hinc</li>
+</ul>
+<div class="container">
+
+    <div style="max-width: 500px; margin: auto">
+        <h1 id="header1">Praeterea iter</h1>
+        <p>
+            Praeterea iter est quasdam res quas ex communi. Ambitioni dedisse scripsisse iudicaretur. Gallia est omnis divisa in partes tres, quarum.
+            Phasellus laoreet lorem vel dolor tempus vehicula. Plura mihi bona sunt, inclinet, amari petere vellent. Qui ipsorum lingua Celtae, nostra Galli appellantur. Fabio vel iudice vincam, sunt in culpa qui officia.
+            Morbi fringilla convallis sapien, id pulvinar odio volutpat. Nihilne te nocturnum praesidium Palati, nihil urbis vigiliae. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Idque Caesaris facere voluntate liceret: sese habere.
+        </p>
+        <h1 id="header2">Idque Caesaris</h1>
+        <p>
+            Idque Caesaris facere voluntate liceret: sese habere. Quam temere in vitiis, legem sancimus haerentia. A communi observantia non est recedendum. Excepteur sint obcaecat cupiditat non proident culpa. Quis aute iure reprehenderit in voluptate velit esse. Phasellus laoreet lorem vel dolor tempus vehicula.
+            Fabio vel iudice vincam, sunt in culpa qui officia. Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh. Etiam habebis sem dicantur magna mollis euismod. Nihilne te nocturnum praesidium Palati, nihil urbis vigiliae.
+            Donec sed odio operae, eu vulputate felis rhoncus. Tityre, tu patulae recubans sub tegmine fagi dolor. Ab illo tempore, ab est sed immemorabili.
+            Quae vero auctorem tractata ab fiducia dicuntur. Nihil hic munitissimus habendi senatus locus, nihil horum? Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Unam incolunt Belgae, aliam Aquitani, tertiam.
+        </p>
+        <h1 id="header3">Qui ipsorum</h1>
+        <p>
+            Qui ipsorum lingua Celtae, nostra Galli appellantur. Cum ceteris in veneratione tui montes, nascetur mus. Hi omnes lingua, institutis, legibus inter se differunt.
+            Cum sociis natoque penatibus et magnis dis parturient. Paullum deliquit, ponderibus modulisque suis ratio utitur. Ab illo tempore, ab est sed immemorabili. Quis aute iure reprehenderit in voluptate velit esse. Petierunt uti sibi concilium totius Galliae in diem certam indicere.
+            Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. A communi observantia non est recedendum. Fabio vel iudice vincam, sunt in culpa qui officia. Non equidem invideo, miror magis posuere velit aliquet. Salutantibus vitae elit libero, a pharetra augue.
+            Quo usque tandem abutere, Catilina, patientia nostra? Nihilne te nocturnum praesidium Palati, nihil urbis vigiliae. Prima luce, cum quibus mons aliud consensu ab eo. Excepteur sint obcaecat cupiditat non proident culpa. Quam diu etiam furor iste tuus nos eludet?
+            Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh. Unam incolunt Belgae, aliam Aquitani, tertiam. Inmensae subtilitatis, obscuris et malesuada fames. Donec sed odio operae, eu vulputate felis rhoncus.
+        </p>
+        <h1 id="header4">Cum sociis</h1>
+        <p>
+            Cum sociis natoque penatibus et magnis dis parturient. Paullum deliquit, ponderibus modulisque suis ratio utitur. Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh.
+            Fictum, deserunt mollit anim laborum astutumque! Etiam habebis sem dicantur magna mollis euismod. A communi observantia non est recedendum.
+            Curabitur blandit tempus ardua ridiculus sed magna. Ab illo tempore, ab est sed immemorabili. Ambitioni dedisse scripsisse iudicaretur. Plura mihi bona sunt, inclinet, amari petere vellent. Quid securi etiam tamquam eu fugiat nulla pariatur. Fabio vel iudice vincam, sunt in culpa qui officia.
+            Salutantibus vitae elit libero, a pharetra augue. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Idque Caesaris facere voluntate liceret: sese habere. Quis aute iure reprehenderit in voluptate velit esse. Unam incolunt Belgae, aliam Aquitani, tertiam. Qui ipsorum lingua Celtae, nostra Galli appellantur.
+            Quae vero auctorem tractata ab fiducia dicuntur. Curabitur est gravida et libero vitae dictum. Non equidem invideo, miror magis posuere velit aliquet.
+        </p>
+        <h1 id="header5">Gallia est</h1>
+        <p>
+            Gallia est omnis divisa in partes tres, quarum. Donec sed odio operae, eu vulputate felis rhoncus. Mercedem aut nummos unde unde extricat, amaras.
+            Salutantibus vitae elit libero, a pharetra augue. Quam diu etiam furor iste tuus nos eludet? Quo usque tandem abutere, Catilina, patientia nostra? Non equidem invideo, miror magis posuere velit aliquet. Quae vero auctorem tractata ab fiducia dicuntur. Quis aute iure reprehenderit in voluptate velit esse.
+            Integer legentibus erat a ante historiarum dapibus. At nos hinc posthac, sitientis piros Afros. Ambitioni dedisse scripsisse iudicaretur. Tu quoque, Brute, fili mi, nihil timor populi, nihil! Nihil hic munitissimus habendi senatus locus, nihil horum? Ut enim ad minim veniam, quis nostrud exercitation.
+            Quisque placerat facilisis egestas cillum dolore. Unam incolunt Belgae, aliam Aquitani, tertiam. Cum sociis natoque penatibus et magnis dis parturient. Fabio vel iudice vincam, sunt in culpa qui officia. Phasellus laoreet lorem vel dolor tempus vehicula.
+            Hi omnes lingua, institutis, legibus inter se differunt. Vivamus sagittis lacus vel augue laoreet rutrum faucibus. Qui ipsorum lingua Celtae, nostra Galli appellantur. Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh.
+        </p>
+        <h1 id="header6">At nos hinc</h1>
+        <p>
+            At nos hinc posthac, sitientis piros Afros. Gallia est omnis divisa in partes tres, quarum. Ut enim ad minim veniam, quis nostrud exercitation.
+            Curabitur blandit tempus ardua ridiculus sed magna. Quis aute iure reprehenderit in voluptate velit esse. Praeterea iter est quasdam res quas ex communi. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Quisque ut dolor gravida, placerat libero vel, euismod. Mercedem aut nummos unde unde extricat, amaras.
+            Vivamus sagittis lacus vel augue laoreet rutrum faucibus. Ab illo tempore, ab est sed immemorabili. Quisque placerat facilisis egestas cillum dolore. Excepteur sint obcaecat cupiditat non proident culpa.
+            Etiam habebis sem dicantur magna mollis euismod. Fictum, deserunt mollit anim laborum astutumque! A communi observantia non est recedendum. Me non paenitet nullum festiviorem excogitasse ad hoc. Phasellus laoreet lorem vel dolor tempus vehicula.
+            Quam temere in vitiis, legem sancimus haerentia. Nec dubitamus multa iter quae et nos invenerat. Quo usque tandem abutere, Catilina, patientia nostra? Nihil hic munitissimus habendi senatus locus, nihil horum? Ullamco laboris nisi ut aliquid ex ea commodi consequat. Quam diu etiam furor iste tuus nos eludet?
+        </p>
+    </div>
+</div>
+</body>
+</html>

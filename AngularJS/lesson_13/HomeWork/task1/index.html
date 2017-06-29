@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="OneOfClass">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>HomeWork - Task 1</title>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+
+    <script>
+
+
+        /*
+
+         ### Задача 1
+         Создайте три разных CSS класса, которые по-разному будут оформлять блок текста на странице.
+         Реализуйте возможность выбирать стиль для оформления страницы с помощью кнопок или checkbox
+
+         * */
+
+        var oneOfClass = angular.module('OneOfClass',[]).
+        controller('OneOfClassCtrl', function($scope) {
+            $scope.colors = [{color: 'blue'},
+                {color:'red'},
+                {color:'green'}
+            ];
+            $scope.selectedColor = "blue";
+        })
+
+
+    </script>
+    <style>
+        .red {
+            border: 1px dashed black;
+            width: 500px;
+            height: 300px;
+            background: red;
+            color: yellow;
+            padding: 50px;
+            border-radius: 30px;
+        }
+        .green {
+            border: 1px dotted red;
+            width: 600px;
+            height: 200px;
+            background: green;
+            color: #a6e1ec;
+            padding: 30px;
+        }
+        .blue {
+            border: 1px solid yellow;
+            width: 400px;
+            height: 400px;
+            background: blue;
+            color: white;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body ng-controller="OneOfClassCtrl">
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div ng-repeat="item in colors">
+                <input
+                        type="radio"
+                        ng-model="$parent.selectedColor"
+                        value="{{item.color}}"
+                        name="group" >{{item.color}}
+                <br />
+            </div>
+
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div ng-class="selectedColor">
+                <p>
+                    SPrima luce, cum quibus mons aliud consensu ab eo. Gallia est omnis divisa in partes tres, quarum. Morbi fringilla convallis sapien, id pulvinar odio volutpat. Quo usque tandem abutere, Catilina, patientia nostra? Sed haec quis possit intrepidus aestimare tellus.
+                    Integer legentibus erat a ante historiarum dapibus. Tityre, tu patulae recubans sub tegmine fagi dolor. Paullum deliquit, ponderibus modulisque suis ratio utitur.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

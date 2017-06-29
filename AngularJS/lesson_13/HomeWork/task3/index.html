@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="FormApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Form Validate</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="../../Libraries/angular.js"></script>
+    <link href="../../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../../Libraries/bootstrap-theme.css" rel="stylesheet" />
+    <style>
+        .jQtooltip.mini {
+            display: inline-block;
+            vertical-align: bottom;
+            font-size: 11px;
+            width: 14px;
+            line-height: 13px;
+            text-align: center;
+            margin-left: 2px;
+            top: -7px;
+            color: #9A4D18;
+            border: 1px solid #FAD28F;
+            background: #FFF6BD;
+            border-radius: 2px;
+        }
+        .jQtooltip {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dotted;
+        }
+        .jQtooltip div {
+            display: none;
+            position: absolute;
+            bottom: -1px;
+            left: -1px;
+            z-index: 1000;
+            width: 250px;
+            padding: 0px 12px;
+            text-align: left;
+            font-size: 12px;
+            line-height: 40px;
+            color: #000;
+            box-shadow: 0 1px 3px #C4C4C4;
+            border: 1px solid #DBB779;
+            background: #FFF6BD;
+            border-radius: 2px;
+        }
+
+        /*form .ng-invalid-required.ng-dirty {
+            background-color: lightpink;
+        }*/
+
+        form .ng-invalid-email.ng-dirty {
+            background-color: lightgoldenrodyellow;
+        }
+
+
+        form .ng-invalid-pattern.ng-dirty{
+            background-color: lightpink;
+        }
+
+        form .ng-valid.ng-dirty {
+            background-color: lightgreen;
+        }
+
+        /*form .ng-invalid.ng-dirty{
+            background-color: lightpink;
+        }*/
+
+        form .ng-pristine {
+            border: 1px dotted gray;
+        }
+
+        form input.confirm {
+            background-color: lightgreen;
+        }
+
+        form input[name=userPasswordSuccess].noconfirm {
+            background-color: lightpink;
+        }
+    </style>
+
+    <script >
+         /*
+
+         ### Задача 3
+         Создайте форму для регистрации нового пользователя. Форма должна содержать поля:
+         ФИО, email, телефон, пароль, подтверждение пароля. Реализуйте real-time валидацию пользовательского ввода.
+
+         */
+
+
+        var module = angular.module("FormApp", []);
+
+        module.controller("styleAppCtrl",function($scope){
+
+            $scope.checker = function(e) {
+
+                if((e.keyCode > 122 || e.keyCode < 65) && (e.keyCode > 1103 || e.keyCode < 1040) && (e.keyCode != 32)){
+                    alert("Вводите только буквы");
+                    e.preventDefault()
+                }
+                if(e.keyCode == 92 || e.keyCode == 94 || e.keyCode == 95){
+                    alert("Вводите только буквы");
+                    e.preventDefault()
+                }
+            }
+
+            $scope.phoneNumPat = /[0-9]{10}/;
+            $scope.emailPattern = new RegExp('[a-z0-9\.]{3,}[a-z0-9]{1,}\@[a-z]{2,}\.[a-z\.]{2,4}');
+            $scope.userPattern = /[а-яA-Яa-zA-Z]{2,}\s[а-яA-Яa-zA-Z]{2,}\s[а-яA-Яa-zA-Z]{2,}/;
+            $scope.headClass = " form-control";
+            $scope.classPassword = "noconfirm" + $scope.headClass;
+            $scope.passwordBool = true;
+
+            $scope.confirmPassword = function (pass1, pass2) {
+                if (pass1 == pass2){
+                    $scope.classPassword = "confirm" + $scope.headClass;
+                }
+                if (pass1 != pass2) {
+                    $scope.classPassword = "noconfirm" + $scope.headClass;
+                }
+            }
+        });
+    </script>
+</head>
+<body ng-controller="styleAppCtrl">
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+            <form name="autoriz" style="margin-top: 50px" novalidate >
+
+                <div class="form-group">
+                    <label for="email">Email</label> <span class="jQtooltip mini" title="Например: wtf2011@gmail.com">?</span>
+                    <input
+                            name="userEmail"
+                            type="text"
+                            id="email"
+                            class="form-control"
+                            ng-model="newUser.email"
+                            required
+                            ng-pattern="emailPattern"
+                            placeholder="user@mail.com" />
+                </div>
+                <div class="error" ng-show="autorize.userEmail.$error.pattern">
+                </div>
+                <div class="form-group">
+                    <label for="text">ФИО</label> <span class="jQtooltip mini" title="Например: Джеки Петрович Чан">?</span>
+                    <input ng-keypress="checker($event)"
+                            name="userName"
+                            type="text"
+                            class="form-control"
+                            ng-model="newUser.name"
+                            ng-pattern="userPattern"
+                            id="text" required
+                            placeholder="Иван Иванович Иванов" />
+
+                </div>
+                <div class="form-group">
+                    <label for="number-phone">Телефон</label> <span class="jQtooltip mini" title="Например: 0987654321">?</span>
+                    <input
+                            name="phoneNumPattern"
+                            class="form-control"
+                            ng-model="newUser.numberPhone"
+                            id="number-phone"
+                            required
+                            placeholder="0987654321"
+                            maxlength="10"
+                            ng-pattern="phoneNumPat" />
+                </div>
+                <div class="form-group">
+                    <label for="password1">Пароль</label>
+                    <input
+                            name="userPassword"
+                            type="password"
+                            class="form-control"
+                            ng-model="newUser.password1"
+                            id="password1"
+                            required
+                            placeholder="Password" />
+                </div>
+                <div class="form-group">
+                    <label for="Password2">Подтверждение Пароля</label>
+                    <input
+                            name="userPasswordSuccess"
+                            type="password"
+                            ng-class="classPassword"
+                            ng-model="newUser.password2"
+                            id="Password2"
+                            ng-change="confirmPassword(newUser.password1,newUser.password2,classPassword)"
+                            required
+                            placeholder="Confirm Password" />
+                </div>
+                <button
+                        type="submit"
+                        ng-disabled="autoriz.$invalid"
+                        class="btn btn-primary btn-block">
+                    OK
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script src="tooltip.js"></script>
+</html>
