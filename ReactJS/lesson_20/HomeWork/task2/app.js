@@ -36,12 +36,13 @@ function getRandomColor()  {
     return randomColor;
 }
 
+var randomColor = "Green"
+
 var Parent = React.createClass({
 
     getInitialState: function() {
         return {
-            items: users,
-            color: "Green"
+            items: users
         }
     },
 
@@ -54,9 +55,7 @@ var Parent = React.createClass({
     },
 
     componentWillUpdate: function() {
-        this.setState({
-            color: this.randomColor
-        })
+        randomColor = getRandomColor()
     },
 
     randomColor: getRandomColor(),
@@ -72,7 +71,7 @@ var Parent = React.createClass({
             <div>
                 Use just numbers & backspace.<br />
                 <input type="text" onChange={this.handlerLimit} onKeyDown={this.handlerKey}/><br />
-                <ul style={{color: this.state.color}}>
+                <ul style={{color: randomColor}}>
                     {
                         this.state.items.map(function(el, i){
                             return <Child key={i} name={el.name} gender={el.gender}/>
