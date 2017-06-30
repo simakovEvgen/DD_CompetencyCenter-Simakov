@@ -54,24 +54,12 @@ var Parent = React.createClass({
     },
 
     componentWillUpdate: function() {
-        var p = new Promise(function(resolve, rejected) {
-            return this.getRandomColor()
-        }).then(alert(this.state.color))
-    },
-
-    changeColor: function() {
         this.setState({
-            color: getRandomColor()
+            color: this.randomColor
         })
     },
 
-    getRandomColor: function()  {
-        var h = Math.floor(Math.random() * (255 - 1) + 1);
-        var s = Math.floor(Math.random() * (100 - 1) + 1) + '%';
-        var l = '50%';
-        var randomColor = 'hsl(' + h + ',' + s + ',' + l + ')';
-        return randomColor;
-    },
+    randomColor: getRandomColor(),
 
     handlerKey: function(event) {
         if((event.keyCode < 48 || event.keyCode > 57) && event.keyCode != 8){
