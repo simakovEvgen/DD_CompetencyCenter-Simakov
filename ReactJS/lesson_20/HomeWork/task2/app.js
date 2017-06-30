@@ -58,8 +58,6 @@ var Parent = React.createClass({
         randomColor = getRandomColor()
     },
 
-    randomColor: getRandomColor(),
-
     handlerKey: function(event) {
         if((event.keyCode < 48 || event.keyCode > 57) && event.keyCode != 8){
             event.preventDefault()
