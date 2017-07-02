@@ -1,10 +1,11 @@
 /*
 * Class Work
 *
-* ### Задача 3
+* ### Задача 1
 *
-* Создайте React компонент, который содержит checkbox и элемент div.
-* При клике по checkbox элементу div присваиваиваются новые стили (выбор стиля призвольный).
+* Создайте React компонент, отображающий кнопку и элемент div.
+* Добавьте на страницу тег style с двумя классами – black и red, задающими соответствующий background-color элементу.
+* Реализуйте переключение этих классов для элемента div при клике по кнопке.
 */
 
 var ChangeDiv = React.createClass({
@@ -19,7 +20,7 @@ var ChangeDiv = React.createClass({
     render: function() {
 
         return (
-            <div style={{color: (this.state.checked ? "red" : "green"), fontSize: (this.state.checked ? "30px" : "50px")}}>
+            <div className={this.state.checked ? "black" : "red"}>
                 This is ChangeDiv component <br />
                 <input type="checkbox" checked={this.state.checked} onChange={this.handleCheck}/>
             </div>
