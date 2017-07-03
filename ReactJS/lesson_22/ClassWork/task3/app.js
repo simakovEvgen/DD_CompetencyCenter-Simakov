@@ -11,8 +11,8 @@
 class Element extends React.Component {
 
     constructor(props){
-        super(props)
-        this.state = {show: false}
+        super(props);
+        this.state = {show: false};
         this.showFunc = this.showFunc.bind(this)
     }
 
@@ -22,9 +22,9 @@ class Element extends React.Component {
 
     render(){
         if (this.state.show){
-            var propss = this.props;
-            var arr = [];
-            for(var key in propss){
+            let propss = this.props;
+            let arr = [];
+            for(let key in propss){
                 arr.push(propss[key]);
             }
             return (
