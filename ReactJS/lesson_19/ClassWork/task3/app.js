@@ -16,6 +16,6 @@ var Summ = React.createClass({
 });
 
 ReactDOM.render(
-    <Summ num1="10" num2="12"/>,
+    <Summ num1={10} num2={12}/>,
     document.getElementById('root')
 );
