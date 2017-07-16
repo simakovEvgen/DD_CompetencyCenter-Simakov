@@ -17,6 +17,6 @@ var MyStyle = React.createClass({
 
 
 ReactDOM.render(
-    <MyStyle color="green" size="50px"/>,
+    <MyStyle name="Jack" action="guitar playing" color="green" size="50px"/>,
     document.getElementById('root')
 );
