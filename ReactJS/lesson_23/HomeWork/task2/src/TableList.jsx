@@ -16,6 +16,16 @@ export default class App extends React.Component {
                 {first_name:"Michael",last_name:"King",email:"mking7@w3.org",gender:"Male",ip_address:"149.114.62.6", id: 34239}
             ]
         }
+        this.addUser = this.addUser.bind(this);
+    }
+    addUser() {
+        let newList = this.state.users;
+        let user = this.state.users[0];
+        let copy = Object.assign({}, user);
+        newList.push(copy);
+        this.setState({
+            users: newList
+        })
     }
 
     render() {
@@ -49,7 +59,7 @@ export default class App extends React.Component {
                     }
                     </tbody>
                 </table>
-                <ButtonComp/>
+                <ButtonComp onClick={this.addUser}/>
             </div>
         )
     }
