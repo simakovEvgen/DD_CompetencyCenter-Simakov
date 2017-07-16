@@ -16,6 +16,7 @@ class Person {
         this.lastName = lastName;
         this.age = age;
         this.gender = gender;
+        this.sayHi = this.sayHi.bind(this);
     }
 
     fullName(){
@@ -23,28 +24,19 @@ class Person {
     }
 
     sayHi(){
-        return ('Hello, my name is ' + this.fullName())
+        return alert('Hello, my name is ' + this.fullName())
     }
 
 }
-
-//Проверка из предыдущего примера
-/*const valera = new Person('Valera', 'Ivanov', 21);
-console.log(valera.age);
-console.log(valera.sayHi());*/
 
 class User extends Person{
     constructor(firstName, lastName, age, gender, signUpDate = 0, id){
         super(firstName, lastName, age, gender);
         this.signUpDate = signUpDate;
         this.id = id;
+
     }
 }
-
-//Проверка из предыдущего примера
-/*const petya = new User();
-console.log(petya.signUpDate);
-console.log(petya.sayHi());*/
 
 var user1, user2, user3;
 
@@ -54,9 +46,6 @@ const users = [
     user3 = new User('Vova', 'Petrov', 23, 'Male', (new Date()), 3)
 ];
 
-//Проверка из предыдущего примера
-/*console.log(users[2].signUpDate);
-console.log(users[0].sayHi());*/
 
 class TableUsers extends React.Component {
     constructor(props) {
@@ -83,9 +72,9 @@ class TableUsers extends React.Component {
                 {
                     this.state.users.map(function(el) {
                         return (
-                            <tr key={el.id}>
-                                <td>{el.firstName}</td>
-                                <td>{el.lastName}</td>
+                            <tr key={el.id} >
+                                <td onClick={el.sayHi} style={{cursor: 'pointer'}}>{el.firstName}</td>
+                                <td onClick={el.sayHi} style={{cursor: 'pointer'}}>{el.lastName}</td>
                                 <td>{el.age}</td>
                                 <td>{el.gender}</td>
                                 <td>{el.signUpDate.toString()}</td>
