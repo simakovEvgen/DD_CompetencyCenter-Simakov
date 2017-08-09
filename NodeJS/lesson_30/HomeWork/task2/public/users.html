@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+        window.onload = function() {
+
+            // запрос для отображения юзера
+            function getItem(id) {
+                var postReq = new XMLHttpRequest();
+                postReq.open('GET', '/users/' + id);
+                postReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                postReq.onreadystatechange = function() {
+
+                    if (postReq.readyState == 4 && postReq.status == 200) {
+                        var arr = JSON.parse(this.responseText);
+                        document.getElementById('user').innerHTML = arr[0].name + ' ' + arr[0].age;
+                    }
+                };
+                postReq.send();
+            }
+
+            // запрос для отображения списка списка
+            var postReq = new XMLHttpRequest();
+            postReq.open('GET', '/array');
+            postReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+
+
+            postReq.onreadystatechange = function() {
+                if (postReq.readyState == 4 && postReq.status == 200) {
+
+                    var arr = JSON.parse(this.responseText);
+
+                    var list = document.createElement('ul');
+
+                    for (var i = 0; i < arr.length; i++){
+
+                        var item = document.createElement('li');
+
+                        item.innerHTML = arr[i].name;
+                        item.dataset.id = i;
+
+                        item.addEventListener('click', function(){
+                            console.log(this.dataset.id);
+                            getItem(this.dataset.id)
+                        });
+
+                        console.log(item)
+                        list.appendChild(item);
+                    }
+                    console.log(list)
+
+                    document.getElementById('output').appendChild(list);
+                }
+            };
+
+            postReq.send('users');
+
+
+        }
+
+    </script>
+</head>
+<body>
+    <p>users</p>
+    <p id="output"></p>
+    <p id='user'></p>
+</body>
+
+</html>
