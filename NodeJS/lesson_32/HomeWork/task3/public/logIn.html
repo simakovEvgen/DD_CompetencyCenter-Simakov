@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = function() {
+
+            var userLogin = document.getElementById('userLogin');
+            var userPass = document.getElementById('userPass');
+            var singBtn = document.getElementById('singBtn');
+
+            function sendData() {
+                let userRegReq = new XMLHttpRequest();
+                userRegReq.open('POST','/logIn');
+                userRegReq.setRequestHeader('Content-Type', 'application/json');
+
+                userRegReq.onload = function() {
+                    var data = JSON.parse(this.responseText);
+                    if (data.sessionUserName){
+                        window.location.href = '/check'
+                    }
+                };
+
+                let userData = {};
+                userData.login = userLogin.value;
+                userData.password = userPass.value;
+
+                let toSend = JSON.stringify(userData);
+                console.log(toSend);
+
+                userRegReq.send(toSend);
+            }
+
+            singBtn.addEventListener('click', sendData);
+        }
+    </script>
+</head>
+<body>
+<input id="userLogin" type="text">
+<input id="userPass" type="text">
+<button id="singBtn">Log In</button>
+</body>
+</html>

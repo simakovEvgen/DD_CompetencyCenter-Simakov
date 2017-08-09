@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editing</title>
+    <script>
+
+        window.onload = function() {
+
+            var editBtn = document.getElementById('edit');
+            var nameField = document.getElementById('name');
+            var infoField = document.getElementById('info');
+
+            editBtn.addEventListener('click', function() {
+                getIndex();
+            });
+
+            function getIndex() {
+                let getItemsReq = new XMLHttpRequest();
+                getItemsReq.open('POST','/editItem');
+                getItemsReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                if (nameField.value != '' && infoField.value != '') {
+                    var data = {};
+                    data.name = nameField.value;
+                    data.info = infoField.value;
+                    var toSend = JSON.stringify(data);
+                    getItemsReq.send(toSend);
+                    location.href = '/';
+                }
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <p>Name</p>
+    <input type="text" id="name">
+    <input type="text" id="info">
+    <button id="edit" >Edit</button>
+</body>
+</html>

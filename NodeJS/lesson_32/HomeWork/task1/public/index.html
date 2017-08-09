@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = function() {
+
+            function getItems() {
+                let getItemsReq = new XMLHttpRequest();
+                getItemsReq.open('GET','/items');
+                getItemsReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                getItemsReq.onload = function() {
+                    document.getElementById('table').innerHTML = this.responseText;
+                };
+                getItemsReq.send();
+            }
+
+            getItems();
+
+            var editBtn = document.getElementById('editItem');
+            var deleteBtn = document.getElementById('deleteItem');
+            var addBtn = document.getElementById('addItem');
+            var inputForId = document.getElementById('inputForId');
+
+            editBtn.addEventListener('click', function() {
+                let editItemReq = new XMLHttpRequest();
+                editItemReq.open('POST', '/');
+                editItemReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                if (inputForId.value != ''){
+                    editItemReq.send(inputForId.value);
+                    editItemReq.onload = function() {
+                        console.log(this.responseText)
+                        if(this.responseText == 'true'){
+                            location.href = '/editItem';
+                        }
+                    };
+                    inputForId.value = '';
+                }
+            });
+
+            addBtn.addEventListener('click', function() {
+                let getAddItemsReq = new XMLHttpRequest();
+                getAddItemsReq.open('GET','/addItem');
+                getAddItemsReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                getAddItemsReq.onload = function() {
+                    location.href = '/addItem';
+                };
+                getAddItemsReq.send();
+            });
+
+            deleteBtn.addEventListener('click', function() {
+                let deleteItemReq = new XMLHttpRequest();
+                deleteItemReq.open('DELETE','/items');
+                deleteItemReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                if (inputForId.value != ''){
+                    deleteItemReq.send(inputForId.value);
+                    getItems();
+                    inputForId.value = '';
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="table"></div>
+    <h1>Edit</h1>
+    <input type="text" id="inputForId">
+    <button id="deleteItem">Delete</button>
+    <button id="editItem">Edit</button>
+    <a href="/editItem">edit</a>
+    <button id="addItem">Add</button>
+</body>
+</html>
